@@ -12,6 +12,7 @@ export class AuditHandler {
 	}
 
 	public async handleMessageUpdate(oldMessage: Message | PartialMessage, newMessage: Message | PartialMessage) {
+		if(oldMessage.author !== null && oldMessage.author.bot) return;
 		let auditChannel = await this.resolve(oldMessage)
 		auditChannel.send(`Message was edited.
 		Link to message: https://discordapp.com/channels/${newMessage.guild?.id}/${newMessage.channel.id}/${newMessage.id}
@@ -22,6 +23,7 @@ export class AuditHandler {
 	}
 
 	public async handleMessageDelete(message: Message | PartialMessage) {
+		if(message.author !== null && message.author.bot) return;
 		let auditChannel = await this.resolve(message)
 		let channelName = message.guild?.channels.resolve(message.channel.id)?.name
 		auditChannel.send(`Message was deleted.
