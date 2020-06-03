@@ -50,7 +50,7 @@ export class AuditHandler {
 
 		let embed = new MessageEmbed()
 		.setTitle("**DELETED MESSAGE**")
-		.setColor("#f8c300")
+		.setColor("#fc3c3c")
 		.setAuthor('Chronicler', this.config.img, 'https://github.com/andretkachenko/chronicler-bot')
 		.setThumbnail(this.config.img)
 		.addField("Author", message.author?.tag, true)
