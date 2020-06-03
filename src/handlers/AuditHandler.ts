@@ -15,7 +15,7 @@ export class AuditHandler {
 	}
 
 	public async handleMessageUpdate(oldMessage: Message | PartialMessage, newMessage: Message | PartialMessage) {
-		if(oldMessage.author !== null && oldMessage.author.bot) return;
+		if((oldMessage.author !== null && oldMessage.author.bot) || newMessage.editedAt === null) return;
 		let auditChannel = await this.resolve(oldMessage)
 
 		let embed = new MessageEmbed()
@@ -46,6 +46,7 @@ export class AuditHandler {
 		  user = message.author
 		}
 
+		if((entry?.target as any).bot) return;
 		if(user !== null && user.bot) return;
 
 		let embed = new MessageEmbed()
