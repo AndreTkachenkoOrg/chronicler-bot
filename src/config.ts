@@ -9,6 +9,7 @@ export class Config {
     mongoCluster: string
     mongoDb: string
     channelCollectionName: string
+    img: string
 
     constructor() {
         dotenv.config()
@@ -20,5 +21,6 @@ export class Config {
         this.mongoCluster = process.env.MONGO_CLUSTER as string
         this.mongoDb=process.env.MONGO_DB as string
         this.channelCollectionName = process.env.MONGO_CH_COLLECTION as string
+        this.img = process.env.IMG as string
     }
 }

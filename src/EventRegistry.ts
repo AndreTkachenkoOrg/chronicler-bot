@@ -22,8 +22,8 @@ export class EventRegistry {
         let mongoConnector = new MongoConnector(config)
 
         this.logger = new Logger()
-        this.auditHandler = new AuditHandler(mongoConnector)
-        this.helpHandlers = new HelpHandlers(client, config)
+        this.auditHandler = new AuditHandler(config, mongoConnector)
+        this.helpHandlers = new HelpHandlers(config)
     }
 
     public registerEvents() {

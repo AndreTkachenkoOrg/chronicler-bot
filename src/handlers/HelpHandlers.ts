@@ -1,28 +1,19 @@
-import { Message, Client } from "discord.js";
+import { Message, Client, MessageEmbed } from "discord.js";
 import { Config } from "../config";
 import { BotCommand } from "../enums/BotCommand";
 
 export class HelpHandlers {
-    private client: Client
     private config: Config
 
-    constructor(client: Client, config: Config) {
-        this.client = client
+    constructor(config: Config) {
         this.config = config
     }
 
     public handleHelpCall(message: Message) {
         // => Prevent message from the bot
-        if (this.client.user != undefined && message.author.id !== this.client.user.id) {
-            // => Test command
+        if (!message.author.bot) {
             if (message.content === this.config.prefix + BotCommand.Help) {
-                message.channel.send(`
-                List of available commands:
-                \`\`\`
-                ${this.config.prefix}about - get info about bot
-                
-                Bot lacks a feature? You can suggest it via https://github.com/andretkachenko/chronicler-bot/issues\`\`\`
-                `)
+                this.giveHelp(message)
                 return
             }
 
@@ -33,12 +24,28 @@ export class HelpHandlers {
         }
     }
 
+    private giveHelp(message: Message) {
+        let embed = new MessageEmbed()
+        .setTitle("Chronicler Help")
+        .setColor("#0099ff")
+        .setAuthor('Chronicler', this.config.img, 'https://github.com/andretkachenko/chronicler-bot')
+        .setThumbnail(this.config.img)
+        .addField("**List of available commands**", `${this.config.prefix}about - get info about bot`)
+        .addField("**Any issues or missing feature?**", "You can suggest it via https://github.com/andretkachenko/chronicler-bot/issues")
+        .setFooter(`Chronicler bot`);
+        message.channel.send(embed)
+    }
+
     private giveAbout(message: Message) {
-        message.channel.send(`
-                \`\`\`
-                Discord bot to write audit of message update and deletion. 
-                Want to use it on your server? Follow this link: https://github.com/andretkachenko/chronicler-bot#want-to-use-at-your-server
-                Any issues or missing feature? You can post it via https://github.com/andretkachenko/chronicler-bot/issues\`\`\`
-                `)
+        let embed = new MessageEmbed()
+        .setTitle("Chronicler Bot")
+        .setDescription("Discord bot to write audit of message update and deletion. ")
+        .setColor("#0099ff")
+        .setAuthor('Chronicler', this.config.img, 'https://github.com/andretkachenko/chronicler-bot')
+        .setThumbnail(this.config.img)
+        .addField("**Want to use it on your server?**", "Follow this link: https://github.com/andretkachenko/chronicler-bot#want-to-use-at-your-server")
+        .addField("**Any issues or missing feature?**", "You can suggest it via https://github.com/andretkachenko/chronicler-bot/issues")
+        .setFooter(`Chronicler bot`);
+        message.channel.send(embed)
     }
 }
