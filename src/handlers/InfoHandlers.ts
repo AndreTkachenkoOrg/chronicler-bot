@@ -1,8 +1,8 @@
-import { Message, Client, MessageEmbed } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { Config } from "../config";
 import { BotCommand } from "../enums/BotCommand";
 
-export class HelpHandlers {
+export class InfoHandlers {
     private config: Config
 
     constructor(config: Config) {
@@ -16,27 +16,10 @@ export class HelpHandlers {
                 this.giveHelp(message)
                 return
             }
-
-            if (message.content === this.config.prefix + BotCommand.About) {
-                this.giveAbout(message)
-                return
-            }
         }
     }
 
     private giveHelp(message: Message) {
-        let embed = new MessageEmbed()
-        .setTitle("Chronicler Help")
-        .setColor("#0099ff")
-        .setAuthor('Chronicler', this.config.img, 'https://github.com/andretkachenko/chronicler-bot')
-        .setThumbnail(this.config.img)
-        .addField("**List of available commands**", `${this.config.prefix}about - get info about bot`)
-        .addField("**Any issues or missing feature?**", "You can suggest it via https://github.com/andretkachenko/chronicler-bot/issues")
-        .setFooter(`Chronicler bot`);
-        message.channel.send(embed)
-    }
-
-    private giveAbout(message: Message) {
         let embed = new MessageEmbed()
         .setTitle("Chronicler Bot")
         .setDescription("Discord bot to write audit of message update and deletion. ")

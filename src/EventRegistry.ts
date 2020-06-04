@@ -4,7 +4,7 @@ import { AuditHandler } from "./handlers/AuditHandler"
 import { ClientEvent } from "./enums/ClientEvent"
 import { ProcessEvent } from "./enums/ProcessEvent"
 import { Config } from "./config"
-import { HelpHandlers } from "./handlers/HelpHandlers"
+import { InfoHandlers } from "./handlers/InfoHandlers"
 import { MongoConnector } from "./db/MongoConnector"
 
 export class EventRegistry {
@@ -13,7 +13,7 @@ export class EventRegistry {
 
     private logger: Logger
     private auditHandler: AuditHandler
-    private helpHandlers: HelpHandlers
+    private helpHandlers: InfoHandlers
 
     constructor(client: Client, config: Config) {
         this.client = client
@@ -23,7 +23,7 @@ export class EventRegistry {
 
         this.logger = new Logger()
         this.auditHandler = new AuditHandler(config, mongoConnector)
-        this.helpHandlers = new HelpHandlers(config)
+        this.helpHandlers = new InfoHandlers(config)
     }
 
     public registerEvents() {

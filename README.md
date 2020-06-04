@@ -5,7 +5,6 @@ Creates #audit channel and the post audit log there each time message is updated
 
 ## Table of Contents
 - [Chronicler-bot](#chronicler-bot)
-- [Existing commands](#existing-commands)
 - [Want to use at your server?](#want-to-use-at-your-server)
 - [If you found a bug](#if-you-found-a-bug)
 - [Need any adjustments?](#need-any-adjustments)
@@ -14,15 +13,6 @@ Creates #audit channel and the post audit log there each time message is updated
   * [Set up Discord bot account](#set-up-discord-bot-account)
   * [Set up MongoDB Atlas](#set-up-mongodb-atlas)
   * [Set up Heroku](#set-up-heroku)
-
-## Existing commands
-List of available commands:
-```
-!help - show list of all commands in text channel
-!about - get info about bot
-```
-
-*You can change command prefix ('!' by default) in your .env (PREFIX=! replace with PREFIX=your-sign')*
 
 ## Want to use at your server?
 Currently the bot is deployed via Heroku and MongoDB Atlas for personal usage.  
