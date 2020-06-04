@@ -46,7 +46,6 @@ export class AuditHandler {
 		  user = message.author
 		}
 
-		if((entry?.target as any).bot) return;
 		if(user !== null && user.bot) return;
 
 		let embed = new MessageEmbed()
