@@ -17,7 +17,7 @@ export class AuditHandler {
 	public async handleMessageUpdate(oldMessage: Message | PartialMessage, newMessage: Message | PartialMessage) {
 		if((oldMessage.author !== null && oldMessage.author.bot) || newMessage.editedAt === null) return;
 
-		let isIgnored = this.mongoConnector.ignoredChannels.isIgnored(newMessage.guild?.id as string, newMessage.channel.id)
+		let isIgnored = await this.mongoConnector.ignoredChannels.isIgnored(newMessage.guild?.id as string, newMessage.channel.id)
 		if(isIgnored) return;
 
 		let auditChannel = await this.resolve(oldMessage)
