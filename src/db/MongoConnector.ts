@@ -1,15 +1,15 @@
 import { Config } from '../config'
 import { MongoClient } from 'mongodb'
-import { AuditChannel } from '../entities/AuditChannel';
+import { AuditChannelRepository } from './AuditChannelRepository';
+import { IgnoredChannelsRepository } from './IgnoredChannelRepository';
 
 export class MongoConnector {
     private client: MongoClient
-    private channelCollectionName: string
-    private dbName: string
+
+    public auditChannels : AuditChannelRepository
+    public ignoredChannels : IgnoredChannelsRepository
 
     constructor(config: Config) {
-        this.channelCollectionName = config.channelCollectionName
-        this.dbName = config.mongoDb
         let uri = `mongodb+srv://${config.mongoName}:${config.mongoPassword}@${config.mongoCluster}`
         this.client = new MongoClient(uri, { useNewUrlParser: true });
 
@@ -19,27 +19,8 @@ export class MongoConnector {
                 return;
             }
         })
-    }
 
-    public async getId(guildId: string): Promise<string> {
-        let channelId: string = ''
-        let db = this.client.db(this.dbName);
-        let auditChannels = db.collection<AuditChannel>(this.channelCollectionName);
-        let aggregation = auditChannels.find({ guildId: guildId })
-        return aggregation.toArray()
-            .then(channels => {
-                let auditChannel = channels[0];
-                if (auditChannel !== undefined) channelId = auditChannel.channelId
-                return channelId
-            })
-    }
-
-    public add(auditChannel: AuditChannel) {
-        let db = this.client.db(this.dbName)
-        let introMaps = db.collection(this.channelCollectionName)
-        introMaps.insertOne(auditChannel, (err) => {
-            if (err) console.log(err)
-            console.log("document inserted")
-        })
+        this.auditChannels = new AuditChannelRepository(this.client, config)
+        this.ignoredChannels = new IgnoredChannelsRepository(this.client, config)
     }
 }

@@ -1,4 +1,6 @@
 export enum BotCommand {
     Help = "help",
-    About = "about"
+    About = "about",
+    IgnoreAdd = "ignore add",
+    IgnoreDelete = "ignore delete"
 }
