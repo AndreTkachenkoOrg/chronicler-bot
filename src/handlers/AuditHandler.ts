@@ -16,6 +16,10 @@ export class AuditHandler {
 
 	public async handleMessageUpdate(oldMessage: Message | PartialMessage, newMessage: Message | PartialMessage) {
 		if((oldMessage.author !== null && oldMessage.author.bot) || newMessage.editedAt === null) return;
+
+		let isIgnored = this.mongoConnector.ignoredChannels.isIgnored(newMessage.guild?.id as string, newMessage.channel.id)
+		if(isIgnored) return;
+
 		let auditChannel = await this.resolve(oldMessage)
 
 		let embed = new MessageEmbed()
@@ -34,6 +38,9 @@ export class AuditHandler {
 	}
 
 	public async handleMessageDelete(message: Message | PartialMessage) {
+		let isIgnored = await this.mongoConnector.ignoredChannels.isIgnored(message.guild?.id as string, message.channel.id)
+		if(isIgnored) return;
+
 		let auditChannel = await this.resolve(message)
 		const entry = await message.guild?.fetchAuditLogs({type: 'MESSAGE_DELETE'}).then(audit => audit.entries.first())
 		let user: User | null
@@ -72,7 +79,7 @@ export class AuditHandler {
 			})
 				.then(ch => {
 					let auditChannel: AuditChannel = { guildId: ch.guild.id, channelId: ch.id }
-					this.mongoConnector.add(auditChannel)
+					this.mongoConnector.auditChannels.add(auditChannel)
 				})
 		}
 	}
@@ -80,10 +87,10 @@ export class AuditHandler {
 	private async resolve(message: Message | PartialMessage): Promise<TextChannel> {
 		if (message.guild !== null) {
 			let guildId = message.guild.id as string
-			let channelId = await this.mongoConnector.getId(guildId)
+			let channelId = await this.mongoConnector.auditChannels.getId(guildId)
 			if (channelId === null || channelId === undefined || channelId === '') {
 				await this.createTextChannel(message)
-				channelId = await this.mongoConnector.getId(guildId)
+				channelId = await this.mongoConnector.auditChannels.getId(guildId)
 			}
 			return message.guild.channels.resolve(channelId) as TextChannel
 		}

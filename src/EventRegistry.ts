@@ -6,6 +6,7 @@ import { ProcessEvent } from "./enums/ProcessEvent"
 import { Config } from "./config"
 import { InfoHandlers } from "./handlers/InfoHandlers"
 import { MongoConnector } from "./db/MongoConnector"
+import { IgnoreHandler } from "./handlers/IgnoreHandler"
 
 export class EventRegistry {
     private client: Client
@@ -14,6 +15,7 @@ export class EventRegistry {
     private logger: Logger
     private auditHandler: AuditHandler
     private helpHandlers: InfoHandlers
+    private ignoreHandler: IgnoreHandler
 
     constructor(client: Client, config: Config) {
         this.client = client
@@ -24,6 +26,7 @@ export class EventRegistry {
         this.logger = new Logger()
         this.auditHandler = new AuditHandler(config, mongoConnector)
         this.helpHandlers = new InfoHandlers(config)
+        this.ignoreHandler = new IgnoreHandler(client, mongoConnector, config)
     }
 
     public registerEvents() {
@@ -57,6 +60,8 @@ export class EventRegistry {
     private registerMessageHandler() {
         this.client.on(ClientEvent.Message, (message: Message) => {
             this.helpHandlers.handleHelpCall(message)
+            this.ignoreHandler.handleAddIgnore(message)
+            this.ignoreHandler.handleDeleteIgnore(message)
         })
     }
 
