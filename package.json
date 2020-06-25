@@ -38,10 +38,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andretkachenko/chronicler-bot.git"
+    "url": "git+https://github.com/AndreTkachenkoOrg/chronicler-bot.git"
   },
   "bugs": {
-    "url": "https://github.com/andretkachenko/chronicler-bot/issues"
+    "url": "https://github.com/AndreTkachenkoOrg/chronicler-bot/issues"
   },
-  "homepage": "https://github.com/andretkachenko/chronicler-bot#readme"
+  "homepage": "https://github.com/AndreTkachenkoOrg/chronicler-bot/#readme"
 }
