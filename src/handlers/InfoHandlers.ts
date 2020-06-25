@@ -28,12 +28,12 @@ export class InfoHandlers {
         let embed = new MessageEmbed()
         .setTitle("**List of available commands**")
         .setColor("#0099ff")
-        .setAuthor('Chronicler', this.config.img, 'https://github.com/andretkachenko/chronicler-bot')
+        .setAuthor('Chronicler', this.config.img, 'https://github.com/AndreTkachenkoOrg/chronicler-bot')
         .setThumbnail(this.config.img)
         .addField(`**${this.config.prefix}ignore add channelId**`, `ignore message update and delete in a text channel with the specified id. Example: ${this.config.prefix}ignore add 717824008636334130`)
         .addField(`**${this.config.prefix}ignore delete channelId**`, `remove a text channel with the specified id from ignore list. Example: ${this.config.prefix}ignore delete 717824008636334130`)
         .addField(`**${this.config.prefix}about**`, `get info about bot`)
-        .addField("**Any issues or missing feature?**", "You can suggest it via https://github.com/andretkachenko/chronicler-bot/issues")
+        .addField("**Any issues or missing feature?**", "You can suggest it via https://github.com/AndreTkachenkoOrg/chronicler-bot/issues")
         .setFooter(`Chronicler bot`);
         message.channel.send(embed)
     }
@@ -43,10 +43,10 @@ export class InfoHandlers {
         .setTitle("Chronicler Bot")
         .setDescription("Discord bot to write audit of message update and deletion. ")
         .setColor("#0099ff")
-        .setAuthor('Chronicler', this.config.img, 'https://github.com/andretkachenko/chronicler-bot')
+        .setAuthor('Chronicler', this.config.img, 'https://github.com/AndreTkachenkoOrg/chronicler-bot')
         .setThumbnail(this.config.img)
-        .addField("**Want to use it on your server?**", "Follow this link: https://github.com/andretkachenko/chronicler-bot#want-to-use-at-your-server")
-        .addField("**Any issues or missing feature?**", "You can suggest it via https://github.com/andretkachenko/chronicler-bot/issues")
+        .addField("**Want to use it on your server?**", "Follow this link: https://github.com/AndreTkachenkoOrg/chronicler-bot#want-to-use-at-your-server")
+        .addField("**Any issues or missing feature?**", "You can suggest it via https://github.com/AndreTkachenkoOrg/chronicler-bot/issues")
         .setFooter(`Chronicler bot`);
         message.channel.send(embed)
     }
